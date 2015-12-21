@@ -40,7 +40,9 @@ describe KCPreparer do
       KCPreparer::Directory.stubs(:get_paths).returns(paths)
 
       paths.each do |path|
-        KCPreparer::Document.expects(:new).with(@config, path).returns(mock())
+        mock = mock()
+        mock.expects(:parse)
+        KCPreparer::Document.expects(:new).with(@config, path).returns(mock)
       end
 
       KCPreparer.main(@argv)
@@ -49,6 +51,7 @@ describe KCPreparer do
     it "should publish the documents to nexus" do
       path = 'foo'
       doc = mock('KCPreparer::Document')
+      doc.expects(:parse)
 
       @config.stubs(:[]).with(:full).returns(true)
       KCPreparer::Directory.stubs(:get_paths).returns([path])
