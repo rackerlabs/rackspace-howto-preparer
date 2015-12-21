@@ -12,10 +12,12 @@ class KCPreparer::Github
     response = RestClient.get(url, {:accept => :json, :Authorization => auth})
     data = JSON.parse(response.body)
 
+    puts data
+
     # grab all of the files changed as part of the commit, and remove
     # all the ones that dont start with the specified path
     files = data['files'].map { |i| i['filename'] }
-    
+
     files.select do |fname|
         ok = true
         ok = ok && fname.start_with?(config[:kc_root])
