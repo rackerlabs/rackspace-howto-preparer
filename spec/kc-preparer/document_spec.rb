@@ -65,7 +65,7 @@ module Fixtures
 DOCUMENT = <<-EOS
 ---
 title: Document Title
-path: /path/to/file
+permalink: /path/to/file
 foo: bar
 ---
 **Hai**
@@ -74,13 +74,13 @@ EOS
 BLANK_DOCUMENT = <<-EOS
 ---
 title: Document Title
-path: /path/to/file
+permalink: /path/to/file
 ---
 EOS
 
 DOCUMENT_NO_TITLE = <<-EOS
 ---
-path: /path/to/file
+permalink: /path/to/file
 ---
 EOS
 
@@ -93,7 +93,7 @@ EOS
 DOCUMENT_HTML = <<-EOS
 ---
 title: Foo
-path: /path/to/file
+permalink: /path/to/file
 html: true
 ---
 <b>hai</b>
