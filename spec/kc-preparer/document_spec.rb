@@ -47,8 +47,8 @@ describe KCPreparer::Document do
   describe "to_envelope" do
     it "should not include the fields with special meaning in the metadata" do
       IO.expects(:read).times(2).with(@path).returns(Fixtures::DOCUMENT)
-      expect(document.to_envelope['meta'].keys).not_to include('title')
-      expect(document.to_envelope['meta'].keys).not_to include('path')
+      expect(document.to_envelope['metadata'].keys).not_to include('title')
+      expect(document.to_envelope['metadata'].keys).not_to include('permalink')
     end
   end
 

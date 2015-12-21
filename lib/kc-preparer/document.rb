@@ -7,19 +7,10 @@ require 'erb'
 class KCPreparer::Document
   attr_reader :path, :contents, :metadata
 
-  # list of top-level envelope variables, taken from:
-  # https://github.com/deconst/preparer-jekyll/blob/master/lib/preparermd/plugins/metadata_envelopes.rb
+  # list of top-level envelope variables
   ENVELOPE_DATA = [
     "title",
-    "permalink",
-    "content_type",
-    "author",
-    "bio",
-    "publish_date",
-    "next",
-    "previous",
-    "queries",
-    "tags"
+    "permalink"
   ]
 
   def initialize(config, path)
@@ -44,23 +35,12 @@ class KCPreparer::Document
     envelope = {}
     metadata = self.metadata.dup
 
-    # handle the 80% cases
     KCPreparer::Document::ENVELOPE_DATA.each do |item|
       envelope[item] = metadata.delete(item) unless metadata[item].nil?
     end
 
-    # add a default for categories
-    envelope['categories'] == [] if envelope['categories'].nil?
-
-    # dedup the tags
-    envelope['tags'] = Set.new(envelope['tags'] || []).to_a
-
-    # add the metadata
-    envelope['meta'] = metadata
-
-    # add the body
+    envelope['metadata'] = metadata
     envelope['body'] = self.contents
-
     envelope
   end
 
