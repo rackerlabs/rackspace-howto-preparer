@@ -18,11 +18,12 @@ Add a file called `.travis.yml` into the root of the github repository:
         - master
 
     env:
-      - KC_DOC_ROOT=<path/to/doc/root>
-      - KC_BASE_URL=<http://example.com/kc>
-      - NEXUS_URL=<nexus url>
-      - secure: <NEXUS_API_KEY encrypted string>
-      - secure: <GITHUB_API_TOKEN encrypted string>
+      global:
+        - KC_DOC_ROOT=<path/to/doc/root>
+        - KC_BASE_URL=<http://example.com/kc>
+        - NEXUS_URL=<nexus url>
+        - secure: <NEXUS_API_KEY encrypted string>
+        - secure: <GITHUB_API_TOKEN encrypted string>
 
     install:
         - gem install specific_install

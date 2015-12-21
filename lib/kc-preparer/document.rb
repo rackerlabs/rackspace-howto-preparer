@@ -24,6 +24,7 @@ class KCPreparer::Document
   def parse
     # regex shamefully stolen from jekyll
     if (md = IO.read(path).match(/^(?<metadata>---\s*\n.*?\n?)^(---\s*$\n?)/m))
+      puts md[:metadata]
       parse_metadata(md[:metadata])
       parse_contents(md.post_match) unless @metadata['html']
     else
@@ -45,6 +46,7 @@ class KCPreparer::Document
   end
 
   def content_id(config)
+    puts metadata
     ERB::Util.url_encode(config[:kc_base_url] + metadata['permalink'])
   end
 
