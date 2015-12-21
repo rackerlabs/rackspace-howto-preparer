@@ -8,9 +8,6 @@ class KCPreparer::Github
   def self.get_paths(config)
     # grab the commit information from github
     url = "https://api.github.com/repos/#{config[:travis_repo_slug]}/commits/#{config[:travis_commit]}"
-
-    puts url
-
     response = RestClient.get(url, {:accept => :json})
     data = JSON.parse(response.body)
 
