@@ -22,6 +22,7 @@ Add a file called `.travis.yml` into the root of the github repository:
       - KC_BASE_URL=<http://example.com/kc>
       - NEXUS_URL=<nexus url>
       - secure: <NEXUS_API_KEY encrypted string>
+      - secure: <GITHUB_API_TOKEN encrypted string>
 
     install:
         - gem install specific_install
@@ -36,6 +37,7 @@ Add a file called `.travis.yml` into the root of the github repository:
   - **KC_BASE_URL** - Base URL for the KC docs
   - **NEXUS_URL** - URL of the nexus repository to ship to
   - **NEXUS_API_KEY** - API key for the nexus repository.  This _must_ be encrypted, see the [Travis CI docs on Encryption](http://docs.travis-ci.com/user/encryption-keys) for more information.
+  - **GITHUB_API_TOKEN** - API token from github, _must_ be encrypted.
 
 ## Developer Setup
 
