@@ -33,14 +33,14 @@ class KCPreparer::Document
 
   def to_envelope
     envelope = {}
-    metadata = self.metadata.dup
+    meta = metadata.dup
 
     KCPreparer::Document::ENVELOPE_DATA.each do |item|
-      envelope[item] = metadata.delete(item) unless metadata[item].nil?
+      envelope[item] = meta.delete(item) unless meta[item].nil?
     end
 
-    envelope['metadata'] = metadata
-    envelope['body'] = self.contents
+    envelope['metadata'] = meta
+    envelope['body'] = contents
     envelope
   end
 

@@ -13,7 +13,7 @@ describe KCPreparer::Github do
       @config.stubs(:[]).with(:travis_repo_slug).returns('rackerlabs/docs-developer-blog')
       @config.stubs(:[]).with(:travis_commit).returns('0a71eb586823d82d05abb0e19ffd737eb54733e3')
       @config.stubs(:[]).with(:github_api_token).returns('nohax')
-      @config.stubs(:[]).with(:kc_root).returns('_posts')
+      @config.stubs(:[]).with(:kc_doc_root).returns('_posts')
 
       VCR.use_cassette('get_commit_info') do
         paths = KCPreparer::Github.get_paths(@config)
