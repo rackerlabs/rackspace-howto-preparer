@@ -8,13 +8,14 @@ class KCPreparer::Github
   def self.get_paths(config)
     # grab the commit information from github
     url = "https://api.github.com/repos/#{config[:travis_repo_slug]}/commits/#{config[:travis_commit]}"
-    response = RestClient.get(url, {:accept => :json})
+    auth = "token #{config[:github_api_token]}"
+    response = RestClient.get(url, {:accept => :json, :Authorization => auth})
     data = JSON.parse(response.body)
 
     # grab all of the files changed as part of the commit, and remove
     # all the ones that dont start with the specified path
     files = data['files'].map { |i| i['filename'] }
-
+    
     files.select do |fname|
         ok = true
         ok = ok && fname.start_with?(config[:kc_root])

@@ -10,7 +10,8 @@ class KCPreparer::Config
   TRAVIS_VARS = [
     'TRAVIS_COMMIT',
     'TRAVIS_REPO_SLUG',
-    'TRAVIS_PULL_REQUEST'
+    'TRAVIS_PULL_REQUEST',
+    'GITHUB_API_TOKEN'
   ]
 
   GENERAL_VARS = [
