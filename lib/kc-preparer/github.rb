@@ -14,7 +14,7 @@ class KCPreparer::Github
   # grab all of the files changed as part of the commit, and remove
   # all the ones that dont start with the specified path
   def self.get_changes(config, commit)
-    data['files'].select do |f|
+    commit['files'].select do |f|
       ok = true
       ok = ok && f['filename'].start_with?(config[:kc_doc_root])
       ok = ok && (f['filename'].end_with?('.md') || f['filename'].end_with?('.html'))

@@ -25,6 +25,19 @@ describe KCPreparer::Github do
     end
   end
 
+  describe "self.get_changes" do
+    it "should return the applicable changes" do
+      url = "https://api.github.com/repos/#{@slug}/commits/#{@commit}"
+
+      VCR.use_cassette('get_commit_info') do
+        data = KCPreparer::Github.get_commit(@config)
+        changes = KCPreparer::Github.get_changes(@config, data)
+        files = changes.map { |change| change['filename'] }
+        expect(files).to include('content/cloud-hosting/undefined/mobile-commerce-on-the-hybrid-cloud.html')
+      end
+    end
+  end
+
   describe "self.get_file_at_sha" do
     it "should get the file contents at a specific sha" do
       filename = "content/auto-scale/general/configure-rackspace-auto-scale-web-hooks-with-cloud-monitoring.html"
