@@ -16,7 +16,7 @@ class KCPreparer::RenameCommand < KCPreparer::Command
     end
 
     # put the new version of the document
-    document = KCPreparer::Document.new(@config, IO.read(@config['filename']))
+    document = KCPreparer::Document.new(@config, IO.read(@change['filename']))
     KCPreparer::Nexus.publish_doc(@config, document)
   end
 end
