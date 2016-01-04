@@ -41,7 +41,7 @@ class KCPreparer::Document
   end
 
   def content_id(config)
-    ERB::Util.url_encode(config[:kc_base_url] + metadata['permalink'])
+    ERB::Util.url_encode(config[:kc_base_url] + '/' + metadata['permalink'])
   end
 
   # parse the contents using redcarpet
