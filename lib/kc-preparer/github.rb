@@ -26,8 +26,13 @@ class KCPreparer::Github
   # different repo
   def self.get_file_at_sha(config, filename, sha)
     url = "https://raw.githubusercontent.com/#{config[:travis_repo_slug]}/#{sha}/#{filename}"
-    response = self.make_request(config, url)
-    (response.code == 404) ? nil : response.body
+
+    begin
+      response = self.make_request(config, url)
+      response.body
+    rescue RestClient::ResourceNotFound
+      nil
+    end
   end
 
   def self.get_url_contents(config, url)
