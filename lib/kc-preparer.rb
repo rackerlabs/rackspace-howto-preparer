@@ -6,7 +6,18 @@ class KCPreparer
   def self.main(argv)
     config = KCPreparer::Config.new(argv)
     commands = config[:full] ? self.from_files(config) : self.from_github(config)
-    commands.each { |command| command.execute }
+
+    puts "Updating #{commands.length} files:"
+    $stdout.sync = true
+
+    commands.each do |command|
+      command.execute
+      print '.'
+      $stdout.flush
+    end
+
+    print '\r'
+    puts 'Done'
   end
 
   # get all the files in the repository and publish them.
