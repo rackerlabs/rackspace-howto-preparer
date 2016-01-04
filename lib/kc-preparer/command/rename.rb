@@ -8,11 +8,9 @@ class KCPreparer::RenameCommand < KCPreparer::Command
 
     old_doc = parents.map do |sha|
       KCPreparer::Github.get_file_at_sha(@config, @change['previous_filename'], sha)
-    end
+    end.compact.first
 
-    puts old_doc.compact.first
-
-    unless old_doc.compact.first.nil?
+    unless old_doc
       document = KCPreparer::Document.new(@config, old_doc)
       KCPreparer::Nexus.delete_doc(@config, document)
     end
