@@ -8,15 +8,12 @@ class KCPreparer
     commands = config[:full] ? self.from_files(config) : self.from_github(config)
 
     puts "Updating #{commands.length} files:"
-    $stdout.sync = true
 
     commands.each do |command|
+      puts "#{command.change['status']} - #{command.change['filename']}"
       command.execute
-      print '.'
-      $stdout.flush
     end
 
-    print '\r'
     puts 'Done'
   end
 
