@@ -11,51 +11,40 @@ describe KCPreparer::Document do
 
   describe "parse" do
     it "should render the content as markdown" do
-      IO.expects(:read).with(@path).returns(Fixtures::DOCUMENT)
+      document = KCPreparer::Document.new(@config, Fixtures::DOCUMENT)
       expect(document.contents).to include("<strong>Hai</strong>")
     end
 
     it "should parse the metadata from yaml" do
-      IO.expects(:read).times(2).with(@path).returns(Fixtures::DOCUMENT)
+      document = KCPreparer::Document.new(@config, Fixtures::DOCUMENT)
       expect(document.metadata.keys).to include('foo')
       expect(document.metadata['foo']).to include('bar')
     end
 
     it "should handle blank content" do
-      IO.expects(:read).with(@path).returns(Fixtures::BLANK_DOCUMENT)
+      document = KCPreparer::Document.new(@config, Fixtures::BLANK_DOCUMENT)
       expect(document.contents).to be_empty
     end
 
     it "should throw error if title does not exist" do
-      IO.expects(:read).with(@path).returns(Fixtures::DOCUMENT_NO_TITLE)
-      expect { document }.to raise_error(ArgumentError)
+      expect {
+        KCPreparer::Document.new(@config, Fixtures::DOCUMENT_NO_TITLE)
+      }.to raise_error(ArgumentError)
     end
 
     it "should throw error if path does not exist" do
-      IO.expects(:read).with(@path).returns(Fixtures::DOCUMENT_NO_PATH)
-      expect { document }.to raise_error(ArgumentError)
-    end
-
-    it "should not call parse_contents() when the document is marked as html" do
-      IO.expects(:read).with(@path).returns(Fixtures::DOCUMENT_HTML)
-      document = KCPreparer::Document.new(@config, @path)
-      document.expects(:parse_contents).never
-      document.parse
+      expect {
+        KCPreparer::Document.new(@config, Fixtures::DOCUMENT_NO_PATH)
+      }.to raise_error(ArgumentError)
     end
   end
 
   describe "to_envelope" do
     it "should not include the fields with special meaning in the metadata" do
-      IO.expects(:read).times(2).with(@path).returns(Fixtures::DOCUMENT)
+      document = KCPreparer::Document.new(@config, Fixtures::DOCUMENT)
       expect(document.to_envelope['metadata'].keys).not_to include('title')
       expect(document.to_envelope['metadata'].keys).not_to include('permalink')
     end
-  end
-
-  def document
-    document = KCPreparer::Document.new(@config, @path)
-    document.parse
-    document
   end
 end
 
