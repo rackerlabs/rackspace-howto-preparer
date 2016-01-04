@@ -17,8 +17,12 @@ describe KCPreparer::Nexus do
       @document.expects(:content_id).with(@config).returns('%2Fpath%2Fto%2Fcontent')
 
       VCR.use_cassette('post_content_to_nexus') do
-        @document.expects(:to_envelope).returns({"title": "Optional page title", "body": "<h1>page content</h1> <p>as raw HTML</p>"})
-        KCPreparer::Nexus.publish(@config, [@document])
+        @document.expects(:to_envelope).returns({
+          "title": "Optional page title",
+          "body": "<h1>page content</h1> <p>as raw HTML</p>"
+        })
+        
+        KCPreparer::Nexus.publish_doc(@config, @document)
       end
     end
   end

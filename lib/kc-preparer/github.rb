@@ -1,26 +1,43 @@
-
 require 'rest_client'
 
 
 class KCPreparer::Github
 
   # get the files changed as part of a commit
-  def self.get_paths(config)
+  def self.get_commit(config)
     # grab the commit information from github
     url = "https://api.github.com/repos/#{config[:travis_repo_slug]}/commits/#{config[:travis_commit]}"
-    auth = "token #{config[:github_api_token]}"
-    response = RestClient.get(url, {:accept => :json, :Authorization => auth})
-    data = JSON.parse(response.body)
+    response = self.make_request(config, url)
+    JSON.parse(response.body)
+  end
 
-    # grab all of the files changed as part of the commit, and remove
-    # all the ones that dont start with the specified path
-    files = data['files'].map { |i| i['filename'] }
-    
-    files.select do |fname|
-        ok = true
-        ok = ok && fname.start_with?(config[:kc_doc_root])
-        ok = ok && (fname.end_with?('.md') || fname.end_with?('.html'))
-        ok
+  # grab all of the files changed as part of the commit, and remove
+  # all the ones that dont start with the specified path
+  def self.get_changes(config, commit)
+    data['files'].select do |f|
+      ok = true
+      ok = ok && f['filename'].start_with?(config[:kc_doc_root])
+      ok = ok && (f['filename'].end_with?('.md') || f['filename'].end_with?('.html'))
+      ok
     end
+  end
+
+  # TODO: this probably breaks on forked commits, since the old commit is in a
+  # different repo
+  def self.get_file_at_sha(config, filename, sha)
+    url = "https://raw.githubusercontent.com/#{config[:travis_repo_slug]}/#{sha}/#{filename}"
+    response = self.make_request(config, url)
+    (response.code == 404) ? nil : response.body
+  end
+
+  def self.get_url_contents(config, url)
+    response = self.make_request(config, url)
+    response.body
+  end
+
+  # get the contents of a file from github
+  def self.make_request(config, url)
+    auth = "token #{config[:github_api_token]}"
+    RestClient.get(url, {:accept => :json, :Authorization => auth})
   end
 end
