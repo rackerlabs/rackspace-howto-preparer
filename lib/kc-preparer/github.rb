@@ -8,7 +8,7 @@ class KCPreparer::Github
     # grab the commit information from github
     url = "https://api.github.com/repos/#{config[:travis_repo_slug]}/commits/#{config[:travis_commit]}"
     auth = "token #{config[:github_api_token]}"
-    RestClient.get(url, {:accept => :json, :Authorization => auth})
+    response = RestClient.get(url, {:accept => :json, :Authorization => auth})
     JSON.parse(response.body)
   end
 
