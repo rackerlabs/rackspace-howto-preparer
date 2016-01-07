@@ -9,7 +9,7 @@ describe KCPreparer::Document do
     @config = mock('KCPreparer::Config')
   end
 
-  describe "parse" do
+  describe "initialize" do
     it "should render the content as markdown" do
       document = KCPreparer::Document.new(@config, Fixtures::DOCUMENT)
       expect(document.contents).to include("<strong>Hai</strong>")
@@ -24,6 +24,12 @@ describe KCPreparer::Document do
     it "should handle blank content" do
       document = KCPreparer::Document.new(@config, Fixtures::BLANK_DOCUMENT)
       expect(document.contents).to be_empty
+    end
+
+    it "should throw error if document is malformed" do
+      expect {
+        KCPreparer::Document.new(@config, Fixtures::MALFORMED_DOCUMENT)
+      }.to raise_error(ArgumentError)
     end
 
     it "should throw error if title does not exist" do
@@ -49,6 +55,13 @@ DOCUMENT = <<-EOS
 title: Document Title
 foo: bar
 ---
+**Hai**
+EOS
+
+MALFORMED_DOCUMENT = <<-EOS
+---
+title: Document Title
+foo: bar
 **Hai**
 EOS
 

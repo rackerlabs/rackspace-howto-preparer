@@ -1,0 +1,49 @@
+---
+http_interactions:
+- request:
+    method: delete
+    uri: http://192.168.99.100:9000/content/%2Fcontent
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Content-Type:
+      - application/json
+      Authorization:
+      - deconst apikey="lolhax"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 204
+      message: No Content
+    headers:
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Headers:
+      - Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, Api-Version,
+        Response-Time
+      Access-Control-Allow-Methods:
+      - GET, PUT, DELETE
+      Access-Control-Expose-Headers:
+      - Api-Version, Request-Id, Response-Time
+      Connection:
+      - Keep-Alive
+      Date:
+      - Thu, 07 Jan 2016 21:02:52 GMT
+      Server:
+      - content-service
+      Request-Id:
+      - 1e780c2b-959a-4776-8c96-5ca773b8a6e5
+      Response-Time:
+      - '6'
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+  recorded_at: Thu, 07 Jan 2016 21:07:43 GMT
+recorded_with: VCR 3.0.0

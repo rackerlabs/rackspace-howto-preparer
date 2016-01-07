@@ -31,7 +31,7 @@ class KCPreparer
     commit = KCPreparer::Github.get_commit(config)
 
     KCPreparer::Github.get_changes(config, commit).map do |change|
-      KCPreparer::Command.from_change(config, commit, change)
+      KCPreparer::Command.from_change(config, change)
     end
   end
 end
