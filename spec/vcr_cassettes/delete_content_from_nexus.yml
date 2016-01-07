@@ -1,12 +1,11 @@
 ---
 http_interactions:
 - request:
-    method: put
+    method: delete
     uri: http://192.168.99.100:9000/content/%2Fcontent
     body:
-      encoding: UTF-8
-      string: '{"title":"Optional page title","body":"<h1>page content</h1> <p>as
-        raw HTML</p>"}'
+      encoding: US-ASCII
+      string: ''
     headers:
       Accept:
       - application/json
@@ -16,8 +15,6 @@ http_interactions:
       - application/json
       Authorization:
       - deconst apikey="lolhax"
-      Content-Length:
-      - '81'
       User-Agent:
       - Ruby
   response:
@@ -37,16 +34,16 @@ http_interactions:
       Connection:
       - Keep-Alive
       Date:
-      - Thu, 03 Dec 2015 20:03:03 GMT
+      - Thu, 07 Jan 2016 21:02:52 GMT
       Server:
       - content-service
       Request-Id:
-      - 6ca7d5ee-14d2-4357-bdaf-903d6f4700b7
+      - 1e780c2b-959a-4776-8c96-5ca773b8a6e5
       Response-Time:
-      - '2'
+      - '6'
     body:
       encoding: UTF-8
       string: ''
-    http_version:
-  recorded_at: Thu, 03 Dec 2015 20:13:59 GMT
+    http_version: 
+  recorded_at: Thu, 07 Jan 2016 21:07:43 GMT
 recorded_with: VCR 3.0.0

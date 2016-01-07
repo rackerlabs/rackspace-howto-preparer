@@ -3,12 +3,12 @@ require 'rest_client'
 
 class KCPreparer::Nexus
 
-  def self.publish_doc(config, doc)
-    RestClient.put(self.url(config, doc), JSON.dump(doc.to_envelope), self.headers(config))
+  def self.publish_doc(config, path, doc)
+    RestClient.put(self.url(config, path), JSON.dump(doc.to_envelope), self.headers(config))
   end
 
-  def self.delete_doc(config, doc)
-    RestClient.delete(self.url(config, doc), self.headers(config))
+  def self.delete_doc(config, path)
+    RestClient.delete(self.url(config, path), self.headers(config))
   end
 
   def self.headers(config)
@@ -16,7 +16,9 @@ class KCPreparer::Nexus
     {:content_type => :json, :accept => :json, :Authorization => auth}
   end
 
-  def self.url(config, doc)
-    "#{config[:nexus_url]}/content/#{doc.content_id(config)}"
+  def self.url(config, path)
+    permalink = File.basename(path, '.*')
+    content_id = ERB::Util.url_encode(config[:kc_base_url] + '/' + permalink)
+    "#{config[:nexus_url]}/content/#{content_id}"
   end
 end

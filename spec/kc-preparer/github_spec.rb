@@ -14,17 +14,6 @@ describe KCPreparer::Github do
     @config.stubs(:[]).with(:kc_doc_root).returns('content')
   end
 
-  describe "self.get_commit" do
-    it "should get commit info from github" do
-      url = "https://api.github.com/repos/#{@slug}/commits/#{@commit}"
-
-      VCR.use_cassette('get_commit_info') do
-        data = KCPreparer::Github.get_commit(@config)
-        expect(data['sha']).to eql(@commit)
-      end
-    end
-  end
-
   describe "self.get_changes" do
     it "should return the applicable changes" do
       url = "https://api.github.com/repos/#{@slug}/commits/#{@commit}"
@@ -34,18 +23,6 @@ describe KCPreparer::Github do
         changes = KCPreparer::Github.get_changes(@config, data)
         files = changes.map { |change| change['filename'] }
         expect(files).to include('content/cloud-hosting/undefined/mobile-commerce-on-the-hybrid-cloud.html')
-      end
-    end
-  end
-
-  describe "self.get_file_at_sha" do
-    it "should get the file contents at a specific sha" do
-      filename = "content/auto-scale/general/configure-rackspace-auto-scale-web-hooks-with-cloud-monitoring.html"
-      url = "https://raw.githubusercontent.com/#{@slug}/#{@commit}/#{filename}"
-
-      VCR.use_cassette('get_file_at_sha') do
-        data = KCPreparer::Github.get_file_at_sha(@config, filename, @commit)
-        expect(data).to include('configure-rackspace-auto-scale-web-hooks-with-cloud-monitoring')
       end
     end
   end

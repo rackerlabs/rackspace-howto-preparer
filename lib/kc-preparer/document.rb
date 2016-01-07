@@ -4,12 +4,11 @@ require 'erb'
 
 
 class KCPreparer::Document
-  attr_reader :data, :contents, :metadata
+  attr_reader :data, :filename, :contents, :metadata
 
   # list of top-level envelope variables
   ENVELOPE_DATA = [
-    "title",
-    "permalink"
+    "title"
   ]
 
   def initialize(config, data)
@@ -40,10 +39,6 @@ class KCPreparer::Document
     envelope
   end
 
-  def content_id(config)
-    ERB::Util.url_encode(config[:kc_base_url] + '/' + metadata['permalink'])
-  end
-
   # parse the contents using redcarpet
   def parse_contents(contents)
     markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
@@ -54,6 +49,5 @@ class KCPreparer::Document
   def parse_metadata(metadata)
     @metadata = YAML.load(metadata) || {}
     raise ArgumentError, "Title must exist in document frontmatter" if @metadata['title'].nil?
-    raise ArgumentError, "Permalink must exist in document frontmatter" if @metadata['permalink'].nil?
   end
 end
