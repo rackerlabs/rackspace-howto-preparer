@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: put
-    uri: http://192.168.99.100:9000/content/%2Fpath%2Fto%2Fcontent
+    uri: http://192.168.99.100:9000/content/%2Fcontent
     body:
       encoding: UTF-8
       string: '{"title":"Optional page title","body":"<h1>page content</h1> <p>as
