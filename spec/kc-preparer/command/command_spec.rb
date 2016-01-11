@@ -9,6 +9,10 @@ describe KCPreparer::Command do
   end
 
   describe "self.from_change" do
+    before :each do
+      @change.expects(:[]).with('filename').returns('filename')
+    end
+
     it 'should execute a put command on "added"' do
       @change.expects(:[]).with('status').returns('added')
       result = KCPreparer::Command.from_change(@config, @change)
@@ -35,6 +39,7 @@ describe KCPreparer::Command do
 
     it 'should execute a rename command on "renamed"' do
       @change.expects(:[]).with('status').returns('renamed')
+      @change.expects(:[]).with('previous_filename').returns('previous_filename')
       result = KCPreparer::Command.from_change(@config, @change)
       expect(result.class.name).to eql('KCPreparer::RenameCommand')
     end
