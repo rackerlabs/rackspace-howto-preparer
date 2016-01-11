@@ -18,7 +18,9 @@ class KCPreparer::Nexus
 
   def self.url(config, path)
     permalink = File.basename(path, '.*')
-    content_id = ERB::Util.url_encode(config[:kc_base_url] + '/' + permalink)
+    content_id = config[:kc_base_url]
+    content_id = File.join(content_id, permalink) unless permalink.empty?
+    content_id = ERB::Util.url_encode(content_id)
     "#{config[:nexus_url]}/content/#{content_id}"
   end
 end
