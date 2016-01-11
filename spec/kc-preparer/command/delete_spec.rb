@@ -5,14 +5,13 @@ require 'spec_helper'
 describe KCPreparer::DeleteCommand do
   before :each do
     @config = mock('KCPreparer::Config')
-    @change = mock('change')
-    @command = KCPreparer::DeleteCommand.new(@config, @change)
+    @filename = 'filename'
+    @command = KCPreparer::DeleteCommand.new(@config, @filename)
   end
 
   describe "execute" do
     it "should delete the document from nexus" do
-      @change.expects(:[]).with('filename').returns('permalink')
-      KCPreparer::Nexus.expects(:delete_doc).with(@config, 'permalink')
+      KCPreparer::Nexus.expects(:delete_doc).with(@config, @filename)
       @command.execute
     end
   end

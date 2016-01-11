@@ -10,7 +10,7 @@ class KCPreparer
     puts "Updating #{commands.length} files:"
 
     commands.each do |command|
-      puts "#{command.change['status']} - #{command.change['filename']}"
+      puts "Command: #{command.class.name} - #{command.filename}"
       command.execute
     end
 
@@ -19,10 +19,8 @@ class KCPreparer
 
   # get all the files in the repository and publish them.
   def self.from_files(config)
-    # TODO: we need to have this delete all of the old items, but we can only
-    # do that once there is the ability to list the items needing deletion
-    # files = Dir.glob(File.join('.', config[:kc_root], '**', '*.{md,html}'))
-    []
+    files = Dir.glob(File.join('.', config[:kc_doc_root], '**', '*.{md,html}'))
+    files.map { |f| KCPreparer::PutCommand.new(config, f) }
   end
 
   # get the information on the files changed from github and create commands
