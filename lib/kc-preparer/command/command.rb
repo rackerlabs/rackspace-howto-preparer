@@ -1,7 +1,7 @@
 
 
 class KCPreparer::Command
-  attr_accessor :config, :change
+  attr_accessor :config, :filename, :previous_filename
 
   def initialize(config, filename, previous_filename=nil)
     @config = config

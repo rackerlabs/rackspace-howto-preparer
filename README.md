@@ -4,7 +4,7 @@ _For all your KC-Preparin' needs!_
 
 This gem is meant to be run as part of a [Travis CI](https://travis-ci.org/) build of the KC github repository.
 
-## Getting Started
+## Travis-CI Setup
 
 Add a file called `.travis.yml` into the root of the github repository:
 
@@ -39,6 +39,25 @@ Add a file called `.travis.yml` into the root of the github repository:
   - **NEXUS_URL** - URL of the nexus repository to ship to
   - **NEXUS_API_KEY** - API key for the nexus repository.  This _must_ be encrypted, see the [Travis CI docs on Encryption](http://docs.travis-ci.com/user/encryption-keys) for more information.
   - **GITHUB_API_TOKEN** - API token from github, _must_ be encrypted.
+
+## Local Setup
+
+Install the app:
+
+    gem install specific_install
+    gem specific_install git@github.com:rackerlabs/rackspace-howto-preparer.git
+
+Export the necessary env variables:
+
+    export KC_DOC_ROOT=[KC_DOC_ROOT]
+    export KC_BASE_URL=[KC_BASE_URL]
+    export NEXUS_URL=[NEXUS_URL]
+    export NEXUS_API_KEY=[NEXUS_API_KEY]
+
+Change directory to where the kc lives, and execute the update:
+
+    cd /path/to/root
+    kc-preparer --full
 
 ## Developer Setup
 
