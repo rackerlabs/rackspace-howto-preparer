@@ -5,7 +5,10 @@ class KCPreparer
   # application entry point
   def self.main(argv)
     config = KCPreparer::Config.new(argv)
+
     commands = config[:full] ? self.from_files(config) : self.from_github(config)
+    commands << self.special_cases(config)
+    commands.flatten!
 
     puts "Updating #{commands.length} files:"
 
@@ -32,6 +35,13 @@ class KCPreparer
       KCPreparer::Command.from_change(config, change)
     end
   end
+
+  # get the special cases commands
+  def self.special_cases(config)
+    [
+      KCPreparer::IndexCommand.new(config, File.join(config[:kc_doc_root], 'index.md'))
+    ]
+  end
 end
 
 require 'kc-preparer/config'
@@ -44,5 +54,6 @@ require 'kc-preparer/nexus'
 # commands
 require 'kc-preparer/command/command'
 require 'kc-preparer/command/delete'
+require 'kc-preparer/command/index'
 require 'kc-preparer/command/put'
 require 'kc-preparer/command/rename'

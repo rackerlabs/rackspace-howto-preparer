@@ -39,4 +39,30 @@ describe KCPreparer::Nexus do
       end
     end
   end
+
+  describe "self.url" do
+    before :each do
+      @config.expects(:[]).with(:nexus_url).returns('nexus_url')
+      @config.expects(:[]).with(:kc_base_url).returns('base_url')
+    end
+
+    it "should add the filename to the base_url" do
+      result = KCPreparer::Nexus.url(@config, 'filename')
+      expect(result).to include('nexus_url')
+      expect(result).to include('base_url')
+      expect(result).to include('filename')
+    end
+
+    it "should not add anything if the filename is blank" do
+      result = KCPreparer::Nexus.url(@config, '')
+      expect(result).to include('nexus_url')
+      expect(result).to include('base_url')
+      expect(result).not_to include('%2F')
+    end
+
+    it "should urlencode the path given" do
+      result = KCPreparer::Nexus.url(@config, 'filename')
+      expect(result).to include('%2F')
+    end
+  end
 end
