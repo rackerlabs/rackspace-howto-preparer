@@ -5,12 +5,15 @@ class KCPreparer
   # application entry point
   def self.main(argv)
     config = KCPreparer::Config.new(argv)
+
     commands = config[:full] ? self.from_files(config) : self.from_github(config)
+    commands << self.special_cases(config)
+    commands.flatten!
 
     puts "Updating #{commands.length} files:"
 
     commands.each do |command|
-      puts "#{command.change['status']} - #{command.change['filename']}"
+      puts "Command: #{command.class.name} - #{command.filename}"
       command.execute
     end
 
@@ -19,10 +22,8 @@ class KCPreparer
 
   # get all the files in the repository and publish them.
   def self.from_files(config)
-    # TODO: we need to have this delete all of the old items, but we can only
-    # do that once there is the ability to list the items needing deletion
-    # files = Dir.glob(File.join('.', config[:kc_root], '**', '*.{md,html}'))
-    []
+    files = Dir.glob(File.join('.', config[:kc_doc_root], '**', '*.{md,html}'))
+    files.map { |f| KCPreparer::PutCommand.new(config, f) }
   end
 
   # get the information on the files changed from github and create commands
@@ -33,6 +34,13 @@ class KCPreparer
     KCPreparer::Github.get_changes(config, commit).map do |change|
       KCPreparer::Command.from_change(config, change)
     end
+  end
+
+  # get the special cases commands
+  def self.special_cases(config)
+    [
+      KCPreparer::IndexCommand.new(config, File.join(config[:kc_doc_root], 'index.md'))
+    ]
   end
 end
 
@@ -46,5 +54,6 @@ require 'kc-preparer/nexus'
 # commands
 require 'kc-preparer/command/command'
 require 'kc-preparer/command/delete'
+require 'kc-preparer/command/index'
 require 'kc-preparer/command/put'
 require 'kc-preparer/command/rename'
