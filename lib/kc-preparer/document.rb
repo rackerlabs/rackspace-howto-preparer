@@ -41,7 +41,7 @@ class KCPreparer::Document
 
   # parse the contents using redcarpet
   def parse_contents(contents)
-    markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
+    markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, :tables => true)
     @contents = markdown.render(contents)
   end
 
