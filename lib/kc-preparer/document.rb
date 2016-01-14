@@ -1,5 +1,5 @@
 require 'yaml'
-require 'redcarpet'
+require 'kramdown'
 require 'erb'
 
 
@@ -20,7 +20,7 @@ class KCPreparer::Document
     # regex shamefully stolen from jekyll
     if (md = data.match(/^(?<metadata>---\s*\n.*?\n?)^(---\s*$\n?)/m))
       parse_metadata(md[:metadata])
-      parse_contents(md.post_match) unless @metadata['html']
+      parse_contents(md.post_match)
     else
       raise ArgumentError, "Document is malformed!"
     end
@@ -40,9 +40,8 @@ class KCPreparer::Document
   end
 
   # parse the contents using redcarpet
-  def parse_contents(contents)
-    markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, :tables => true)
-    @contents = markdown.render(contents)
+  def parse_contents(data)
+    @contents = Kramdown::Document.new(data, :parse_block_html => true).to_html
   end
 
   # parse the metadata using yaml
