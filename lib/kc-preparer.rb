@@ -22,7 +22,7 @@ class KCPreparer
 
   # get all the files in the repository and publish them.
   def self.from_files(config)
-    files = Dir.glob(File.join('.', config[:kc_doc_root], '**', '*.{md,html}'))
+    files = Dir.glob(File.join(Dir.pwd, config[:kc_doc_root], '**', '*.{md,html}'))
     files.map { |f| KCPreparer::PutCommand.new(config, f) }
   end
 
@@ -39,12 +39,14 @@ class KCPreparer
   # get the special cases commands
   def self.special_cases(config)
     [
-      KCPreparer::IndexCommand.new(config, File.join(config[:kc_doc_root], 'index.md'))
+      KCPreparer::IndexCommand.new(config, File.join(config[:kc_doc_root], 'index.md')),
+      KCPreparer::AllArticlesCommand.new(config, 'products.csv')
     ]
   end
 end
 
 require 'kc-preparer/config'
+require 'kc-preparer/command/command'
 
 # services
 require 'kc-preparer/document'
@@ -52,7 +54,7 @@ require 'kc-preparer/github'
 require 'kc-preparer/nexus'
 
 # commands
-require 'kc-preparer/command/command'
+require 'kc-preparer/command/all_articles'
 require 'kc-preparer/command/delete'
 require 'kc-preparer/command/index'
 require 'kc-preparer/command/put'

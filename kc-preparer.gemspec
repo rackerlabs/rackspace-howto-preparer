@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.executables  = ['kc-preparer']
   s.require_path = 'lib'
 
-  s.add_runtime_dependency "redcarpet", ["= 2.3.0"]
+  s.add_runtime_dependency "kramdown", ["= 1.9.0"]
   s.add_runtime_dependency "rest-client", ["=  1.8.0"]
   s.add_runtime_dependency "json", ['= 1.8.3']
 
