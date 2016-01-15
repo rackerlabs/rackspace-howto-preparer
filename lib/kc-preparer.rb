@@ -29,9 +29,7 @@ class KCPreparer
   # get the information on the files changed from github and create commands
   # for them
   def self.from_github(config)
-    commit = KCPreparer::Github.get_commit(config)
-
-    KCPreparer::Github.get_changes(config, commit).map do |change|
+    KCPreparer::Git.get_file_changes(config).map do |change|
       KCPreparer::Command.from_change(config, change)
     end
   end
@@ -46,16 +44,15 @@ class KCPreparer
 end
 
 require 'kc-preparer/config'
-require 'kc-preparer/command/command'
-
-# services
 require 'kc-preparer/document'
-require 'kc-preparer/github'
+require 'kc-preparer/git'
 require 'kc-preparer/nexus'
+require 'kc-preparer/parser'
 
 # commands
+require 'kc-preparer/command/command'
+
 require 'kc-preparer/command/all_articles'
 require 'kc-preparer/command/delete'
 require 'kc-preparer/command/index'
 require 'kc-preparer/command/put'
-require 'kc-preparer/command/rename'
