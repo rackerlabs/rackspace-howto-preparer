@@ -7,10 +7,7 @@ class KCPreparer::Config
   def_delegators :@config, :[], :[]=
 
   TRAVIS_VARS = [
-    'TRAVIS_COMMIT',
-    'TRAVIS_REPO_SLUG',
-    'TRAVIS_PULL_REQUEST',
-    'GITHUB_API_TOKEN'
+    'TRAVIS_COMMIT'
   ]
 
   GENERAL_VARS = [
