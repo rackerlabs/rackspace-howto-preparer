@@ -11,9 +11,9 @@ class KCPreparer::Document
     "title"
   ]
 
-  def initialize(config, path, data)
+  def initialize(config, filename, data)
     @config = config
-    @path = path
+    @filename = filename
     @data = data
     @contents = ""
     @metadata = {}
@@ -35,7 +35,12 @@ class KCPreparer::Document
       envelope[item] = meta.delete(item) unless meta[item].nil?
     end
 
+    # grab the github filename
+    github_url = (@filename.nil?) ? '' : File.join(@config[:kc_base_url], 'blob/master', @filename)
+
+    # setup the metadata
     envelope['metadata'] = meta
+    envelope['metadata']['github_url'] = github_url
     envelope['body'] = contents
     envelope
   end
