@@ -36,7 +36,7 @@ class KCPreparer::Document
     end
 
     # grab the github filename
-    github_url = (@filename.nil?) ? '' : File.join(@config[:kc_base_url], 'blob/master', @filename)
+    github_url = (@filename.nil?) ? '' : File.join(@config[:kc_base_url], 'edit/master', @filename)
 
     # setup the metadata
     envelope['metadata'] = meta

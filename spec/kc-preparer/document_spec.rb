@@ -52,7 +52,7 @@ describe KCPreparer::Document do
     it "should add the full github path to the metadata" do
       document = KCPreparer::Document.new(@config, 'contents/foo.md', Fixtures::DOCUMENT)
       expect(document.to_envelope['metadata'].keys).to include('github_url')
-      expect(document.to_envelope['metadata']['github_url']).to eql('http://example.com/blob/master/contents/foo.md')
+      expect(document.to_envelope['metadata']['github_url']).to eql('http://example.com/edit/master/contents/foo.md')
     end
   end
 end
