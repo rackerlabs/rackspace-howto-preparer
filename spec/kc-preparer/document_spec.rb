@@ -11,37 +11,37 @@ describe KCPreparer::Document do
 
   describe "initialize" do
     it "should render the content as markdown" do
-      document = KCPreparer::Document.new(@config, Fixtures::DOCUMENT)
+      document = KCPreparer::Document.new(@config, nil, Fixtures::DOCUMENT)
       expect(document.contents).to include("<strong>Hai</strong>")
     end
 
     it "should parse the metadata from yaml" do
-      document = KCPreparer::Document.new(@config, Fixtures::DOCUMENT)
+      document = KCPreparer::Document.new(@config, nil, Fixtures::DOCUMENT)
       expect(document.metadata.keys).to include('foo')
       expect(document.metadata['foo']).to include('bar')
     end
 
     it "should handle blank content" do
-      document = KCPreparer::Document.new(@config, Fixtures::BLANK_DOCUMENT)
-      expect(document.contents).to be_empty
+      document = KCPreparer::Document.new(@config, nil, Fixtures::BLANK_DOCUMENT)
+      expect(document.contents).to eql("\n")
     end
 
     it "should throw error if document is malformed" do
       expect {
-        KCPreparer::Document.new(@config, Fixtures::MALFORMED_DOCUMENT)
+        KCPreparer::Document.new(@config, nil, Fixtures::MALFORMED_DOCUMENT)
       }.to raise_error(ArgumentError)
     end
 
     it "should throw error if title does not exist" do
       expect {
-        KCPreparer::Document.new(@config, Fixtures::DOCUMENT_NO_TITLE)
+        KCPreparer::Document.new(@config, nil, Fixtures::DOCUMENT_NO_TITLE)
       }.to raise_error(ArgumentError)
     end
   end
 
   describe "to_envelope" do
     it "should not include the fields with special meaning in the metadata" do
-      document = KCPreparer::Document.new(@config, Fixtures::DOCUMENT)
+      document = KCPreparer::Document.new(@config, nil, Fixtures::DOCUMENT)
       expect(document.to_envelope['metadata'].keys).not_to include('title')
     end
   end

@@ -11,8 +11,9 @@ class KCPreparer::Document
     "title"
   ]
 
-  def initialize(config, data)
+  def initialize(config, path, data)
     @config = config
+    @path = path
     @data = data
     @contents = ""
     @metadata = {}
