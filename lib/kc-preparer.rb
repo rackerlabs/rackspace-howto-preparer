@@ -22,7 +22,7 @@ class KCPreparer
 
   # get all the files in the repository and publish them.
   def self.from_files(config)
-    files = Dir.glob(File.join(Dir.pwd, config[:kc_doc_root], '**', '*.{md,html}'))
+    files = Dir.glob(File.join(config[:kc_doc_root], '**', '*.{md,html}'))
     files.map { |f| KCPreparer::PutCommand.new(config, f) }
   end
 
