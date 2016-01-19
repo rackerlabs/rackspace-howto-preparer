@@ -22,14 +22,14 @@ class KCPreparer::AllArticlesCommand < KCPreparer::Command
   def get_permalinks(paths)
     paths.map do |path|
       link = '/howto/' + File.basename(path, '.*')
-      document = KCPreparer::Document.new(@config, IO.read(path))
+      document = KCPreparer::Document.new(@config, path, IO.read(path))
       {'link' => link, 'title' => document.metadata['title']}
     end
   end
 
   def generate_file(row, permalinks)
     template = KCPreparer::AllArticlesCommand::Template.new(row, permalinks)
-    KCPreparer::Document.new(@config, template.render)
+    KCPreparer::Document.new(@config, nil, template.render)
   end
 
   class Template

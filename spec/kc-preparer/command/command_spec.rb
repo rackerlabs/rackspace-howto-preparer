@@ -10,38 +10,25 @@ describe KCPreparer::Command do
 
   describe "self.from_change" do
     before :each do
-      @change.expects(:[]).with('filename').returns('filename')
+      @change.expects(:[]).with(:filename).returns('filename')
     end
 
-    it 'should execute a put command on "added"' do
-      @change.expects(:[]).with('status').returns('added')
+    it 'should execute a put command on "A" status' do
+      @change.expects(:[]).with(:status).returns('A')
       result = KCPreparer::Command.from_change(@config, @change)
       expect(result.class.name).to eql('KCPreparer::PutCommand')
     end
 
-    it 'should execute a put command on "changed"' do
-      @change.expects(:[]).with('status').returns('changed')
+    it 'should execute a put command on "M" status' do
+      @change.expects(:[]).with(:status).returns('M')
       result = KCPreparer::Command.from_change(@config, @change)
       expect(result.class.name).to eql('KCPreparer::PutCommand')
     end
 
-    it 'should execute a put command on "modified"' do
-      @change.expects(:[]).with('status').returns('modified')
-      result = KCPreparer::Command.from_change(@config, @change)
-      expect(result.class.name).to eql('KCPreparer::PutCommand')
-    end
-
-    it 'should execute a delete command on "removed"' do
-      @change.expects(:[]).with('status').returns('removed')
+    it 'should execute a delete command on "D" status' do
+      @change.expects(:[]).with(:status).returns('D')
       result = KCPreparer::Command.from_change(@config, @change)
       expect(result.class.name).to eql('KCPreparer::DeleteCommand')
-    end
-
-    it 'should execute a rename command on "renamed"' do
-      @change.expects(:[]).with('status').returns('renamed')
-      @change.expects(:[]).with('previous_filename').returns('previous_filename')
-      result = KCPreparer::Command.from_change(@config, @change)
-      expect(result.class.name).to eql('KCPreparer::RenameCommand')
     end
   end
 end

@@ -15,7 +15,7 @@ describe KCPreparer::PutCommand do
   describe "execute" do
     it "should update the document in nexus" do
       IO.expects(:read).with(@path).returns(@data)
-      KCPreparer::Document.expects(:new).with(@config, @data).returns(@document)
+      KCPreparer::Document.expects(:new).with(@config, @path, @data).returns(@document)
       KCPreparer::Nexus.expects(:publish_doc).with(@config, @path, @document)
       @command.execute
     end
