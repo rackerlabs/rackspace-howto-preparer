@@ -21,7 +21,7 @@ class KCPreparer::AllArticlesCommand < KCPreparer::Command
 
   def get_permalinks(paths)
     paths.map do |path|
-      link = '/howto/' + File.basename(path, '.*')
+      link = '/how-to/' + File.basename(path, '.*')
       document = KCPreparer::Document.new(@config, path, IO.read(path))
       {'link' => link, 'title' => document.metadata['title']}
     end
