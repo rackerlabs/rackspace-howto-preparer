@@ -54,12 +54,12 @@ ALL_ARTICLE_TEMPLATE = <<-END
 title: <%= @product_name %> - All Articles
 category: <%= @category %>
 ---
-### <%= @product_name %>
 
-#### All Articles
-
-<div class="all_articles">
-<% for @link in @permalinks%>* [<%= @link['title'] %>](<%= @link['link'] %>)
+<div class="article-list">
+<% for @link in @permalinks %>
+<div class="article-entry">
+<h4><a href="<%= @link['link'] %>"><%= @link['title'] %></a></h4>
+</div>
 <% end %>
 </div>
 END
