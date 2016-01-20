@@ -15,7 +15,7 @@ class KCPreparer::Git
       base = parents[1]
     end
 
-    puts "Getting all files changed from #{base} to #{current}"
+    puts "\nCollecting files changed from #{base} to #{current}"
 
     # grab all of the files that changed between the base
     changes = `git diff-tree --no-commit-id --name-status -r #{base}..#{current}`
