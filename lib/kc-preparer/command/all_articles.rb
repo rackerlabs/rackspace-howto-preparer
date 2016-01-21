@@ -39,6 +39,7 @@ class KCPreparer::AllArticlesCommand < KCPreparer::Command
     def initialize(row, permalinks)
       @product_name = row['Product Name']
       @category = row['Category']
+      @directory = row['Directory']
       @permalinks = permalinks
     end
 
@@ -53,6 +54,8 @@ ALL_ARTICLE_TEMPLATE = <<-END
 ---
 title: <%= @product_name %> - All Articles
 category: <%= @category %>
+product: <%= @product_name %>
+product_url: <%= @directory %>
 ---
 
 <div class="article-list">
