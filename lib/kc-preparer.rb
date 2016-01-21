@@ -5,19 +5,37 @@ class KCPreparer
   # application entry point
   def self.main(argv)
     config = KCPreparer::Config.new(argv)
-
     commands = config[:full] ? self.from_files(config) : self.from_github(config)
-    commands << self.special_cases(config)
-    commands.flatten!
 
-    puts "Updating #{commands.length} files:"
+    # handle deletes
+    delete_commands = commands.select { |command| command.class == KCPreparer::DeleteCommand }
 
+    if !delete_commands.empty?
+      puts "\nDeleting #{delete_commands.length} files:"
+      self.execute(delete_commands)
+      puts ""
+    end
+
+    # handle adds
+    put_commands = commands.select { |command| command.class == KCPreparer::PutCommand }
+
+    if !put_commands.empty?
+      puts "\nPutting #{put_commands.length} files:"
+      self.execute(put_commands)
+    end
+
+    # special cases
+    puts "\nExecuting special cases:"
+    self.execute(self.special_cases(config))
+
+    puts "\nDone."
+  end
+
+  def self.execute(commands)
     commands.each do |command|
       puts "Command: #{command.class.name} - #{command.filename}"
       command.execute
     end
-
-    puts 'Done'
   end
 
   # get all the files in the repository and publish them.
