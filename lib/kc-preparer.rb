@@ -55,7 +55,7 @@ class KCPreparer
   # get the special cases commands
   def self.special_cases(config)
     [
-      KCPreparer::IndexCommand.new(config, File.join(config[:kc_doc_root], 'index.md')),
+      KCPreparer::IndexCommand.new(config, File.join(config[:kc_doc_root], 'index.html')),
       KCPreparer::AllArticlesCommand.new(config, 'products.csv')
     ]
   end
