@@ -22,6 +22,7 @@ Add a file called `.travis.yml` into the root of the github repository:
         - KC_DOC_ROOT=<path/to/doc/root>
         - KC_BASE_URL=<http://example.com/kc>
         - NEXUS_URL=<nexus url>
+        - URL_PATH="/how-to/"
         - secure: <NEXUS_API_KEY encrypted string>
         - secure: <GITHUB_API_TOKEN encrypted string>
 
@@ -53,6 +54,10 @@ Export the necessary env variables:
     export KC_BASE_URL=[KC_BASE_URL]
     export NEXUS_URL=[NEXUS_URL]
     export NEXUS_API_KEY=[NEXUS_API_KEY]
+
+Optionally, specify:
+
+    export URL_PATH="/how-to/"
 
 Change directory to where the kc lives, and execute the update:
 

@@ -20,11 +20,13 @@ class KCPreparer::AllArticlesCommand < KCPreparer::Command
   end
 
   def get_permalinks(paths)
-    paths.map do |path|
-      link = '/how-to/' + File.basename(path, '.*')
+    url_path = config[:url_path] || '/how-to/'
+    result = paths.map do |path|
+      link = url_path + File.basename(path, '.*')
       document = KCPreparer::Document.new(@config, path, IO.read(path))
       {'link' => link, 'title' => document.metadata['title']}
     end
+    result.sort! { |x,y| x['title'] <=> y['title'] }
   end
 
   def generate_file(row, permalinks)
