@@ -14,7 +14,8 @@ class KCPreparer::Config
     'KC_DOC_ROOT',
     'KC_BASE_URL',
     'NEXUS_URL',
-    'NEXUS_API_KEY'
+    'NEXUS_API_KEY',
+    'URL_PATH'
   ]
 
   def initialize(argv)
