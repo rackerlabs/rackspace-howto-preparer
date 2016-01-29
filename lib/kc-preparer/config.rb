@@ -14,7 +14,10 @@ class KCPreparer::Config
     'KC_DOC_ROOT',
     'KC_BASE_URL',
     'NEXUS_URL',
-    'NEXUS_API_KEY',
+    'NEXUS_API_KEY'
+  ]
+
+  OPTIONAL_VARS = [
     'URL_PATH'
   ]
 
@@ -49,5 +52,6 @@ class KCPreparer::Config
       raise ArgumentError, "Environment variable #{key} not found." if value.nil?
       self[key.downcase.to_sym] = value
     end
+    OPTIONAL_VARS.each { |key| self[key.downcase.to_sym] = ENV[key] }
   end
 end
