@@ -6,7 +6,7 @@ describe KCPreparer::IndexCommand do
   before :each do
     @config = mock('KCPreparer::Config')
     @document = mock('KCPreparer::Document')
-    @path = 'path/to/index.md'
+    @path = 'path/to/index.html'
     @data = 'data'
 
     @command = KCPreparer::IndexCommand.new(@config, @path)
